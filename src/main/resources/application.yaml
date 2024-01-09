@@ -1,0 +1,49 @@
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 2004
+    url:  jdbc:postgresql://localhost:5432/restaurantorderingsystem
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+    show_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sodiqovadildora02@gmail.com
+    password: wnmmerrtlvalkcih
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 0
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger
+    tags-sorter: alpha
+    operations-sorter: alpha
+    disable-swagger-default-url: true
+    doc-expansion: none
+
+jwt:
+  access_expiry: 300000  # 5 minutes (5 minutes * 60 seconds/minute)
+  refresh_expiry: 86400000  # 1 day (60 seconds/minute * 60 minutes/hour * 24 hours/day)
+  secret: gjhkoiutrefdsavzbxcnmktjyhretgwedfvbnjkrjyerhsfg
