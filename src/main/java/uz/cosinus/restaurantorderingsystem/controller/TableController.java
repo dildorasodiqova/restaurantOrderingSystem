@@ -11,3 +11,4 @@ import uz.cosinus.restaurantorderingsystem.service.tableService.TableService;
 public class TableController {
     private final TableService tableService;
 }
+

@@ -13,5 +13,6 @@ public interface TableService {
     TableEntity finById(UUID tableId);
     TableResponseDto getById(UUID tableId);
 
+
     /// shuyerda stoleni disactiva qiladigani bolish kerak. qachonki orderi yuq bo'lsa.
 }

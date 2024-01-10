@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderCreateDto {
+public class OrderTableCreateDto {
     private Integer intendedOfPerson;
     private LocalDateTime timeBooked;
 }

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderTable extends BaseEntity {
+public class OrderTableEntity extends BaseEntity {
     @ManyToOne(cascade =  CascadeType.ALL, fetch = FetchType.LAZY)
     private TableEntity table;
 
