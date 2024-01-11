@@ -16,6 +16,5 @@ public interface OrderTableService {
     String cancelOrderTable(UUID orderId);
     List<OrderTableResponseDto> getAll(int page, int size);
 
-    boolean findOrderOfTable(UUID tableId);
 
 }

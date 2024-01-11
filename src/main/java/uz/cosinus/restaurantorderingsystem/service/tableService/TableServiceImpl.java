@@ -10,6 +10,7 @@ import uz.cosinus.restaurantorderingsystem.entities.FloorEntity;
 import uz.cosinus.restaurantorderingsystem.entities.TableEntity;
 import uz.cosinus.restaurantorderingsystem.exception.BadRequestException;
 import uz.cosinus.restaurantorderingsystem.exception.DataNotFoundException;
+import uz.cosinus.restaurantorderingsystem.repository.OrderTableRepository;
 import uz.cosinus.restaurantorderingsystem.repository.TableRepository;
 import uz.cosinus.restaurantorderingsystem.service.floorService.FloorService;
 import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
@@ -22,7 +23,7 @@ import java.util.UUID;
 public class TableServiceImpl implements TableService{
     private final FloorService floorService;
     private final TableRepository tableRepository;
-    private final OrderTableService orderTableService;
+    private final OrderTableRepository orderTableRepository;
     @Override
     public String create(UUID floorId, TableCreateDto createDto) {
         FloorEntity byId = floorService.findById(floorId);
@@ -54,7 +55,7 @@ public class TableServiceImpl implements TableService{
     @Override
     public String disActive(UUID tableId) {
         TableEntity table = tableRepository.findById(tableId).orElseThrow(() -> new DataNotFoundException("Table not found"));
-        boolean orderOfTable = orderTableService.findOrderOfTable(table.getId());
+        boolean orderOfTable = orderTableRepository.existsAllByTableIdAndIsActiveTrue(table.getId());
         if (orderOfTable){
             throw new BadRequestException("Zakas available for this table, please try again later.");
         }

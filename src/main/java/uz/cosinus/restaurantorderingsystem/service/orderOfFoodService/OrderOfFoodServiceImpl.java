@@ -9,9 +9,11 @@ import uz.cosinus.restaurantorderingsystem.dto.responseDto.OrderFoodResponseDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.OrderTableResponseDto;
 import uz.cosinus.restaurantorderingsystem.entities.FoodEntity;
 import uz.cosinus.restaurantorderingsystem.entities.OrderOfFoodEntity;
+import uz.cosinus.restaurantorderingsystem.entities.OrderTableEntity;
 import uz.cosinus.restaurantorderingsystem.enums.FoodStatus;
 import uz.cosinus.restaurantorderingsystem.exception.DataNotFoundException;
 import uz.cosinus.restaurantorderingsystem.repository.OrderFoodRepository;
+import uz.cosinus.restaurantorderingsystem.repository.OrderTableRepository;
 import uz.cosinus.restaurantorderingsystem.service.foodService.FoodService;
 import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
 
@@ -22,7 +24,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderOfFoodServiceImpl implements OrderOfFoodService{
     private final OrderFoodRepository orderFoodRepository;
-    private final OrderTableService orderTableService;
+    private final OrderTableRepository orderTableRepository;
     private final FoodService foodService;
     private final ModelMapper modelMapper;
 
@@ -41,8 +43,8 @@ public class OrderOfFoodServiceImpl implements OrderOfFoodService{
 
     @Override
     public OrderFoodResponseDto orderOfTable(UUID orderTableId) {
-        OrderTableResponseDto table = orderTableService.getById(orderTableId);
-        OrderOfFoodEntity order = orderFoodRepository.findAllByIsActiveTrueAndFloorNumberAndTableNumber(table.getTable().getFloorNumber(), table.getTable().getTableNumber())
+        OrderTableEntity table = orderTableRepository.findById(orderTableId).orElseThrow(()->new DataNotFoundException("order table not found"));
+        OrderOfFoodEntity order = orderFoodRepository.findAllByIsActiveTrueAndFloorNumberAndTableNumber(table.getTable().getFloor().getNumber(), table.getTable().getTableNumber())
                 .orElseThrow(()-> new DataNotFoundException("Order not fount"));
 
         List<FoodResponseDto> food = foodService.parse(order.getFood());
@@ -51,8 +53,8 @@ public class OrderOfFoodServiceImpl implements OrderOfFoodService{
 
     @Override
     public boolean findById(UUID orderTableId) {
-        OrderTableResponseDto table = orderTableService.getById(orderTableId);
-        Optional<OrderOfFoodEntity> order = orderFoodRepository.findAllByIsActiveTrueAndFloorNumberAndTableNumber(table.getTable().getFloorNumber(), table.getTable().getTableNumber());
+        OrderTableEntity table = orderTableRepository.findById(orderTableId).orElseThrow(()->new DataNotFoundException("order table not found"));
+        Optional<OrderOfFoodEntity> order = orderFoodRepository.findAllByIsActiveTrueAndFloorNumberAndTableNumber(table.getTable().getFloor().getNumber(), table.getTable().getTableNumber());
         return order.isPresent();
     }
 

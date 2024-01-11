@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import uz.cosinus.restaurantorderingsystem.dto.createDto.MailDto;
 import uz.cosinus.restaurantorderingsystem.dto.createDto.OrderTableCreateDto;
-import uz.cosinus.restaurantorderingsystem.dto.responseDto.OrderFoodResponseDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.OrderTableResponseDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.TableResponseDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.UserResponseDto;
@@ -91,10 +90,7 @@ public class  OrderTableServiceImpl implements OrderTableService{
         return parse(aTrue);
     }
 
-    @Override
-    public boolean findOrderOfTable(UUID tableId) {
-       return orderTableRepository.existsAllByTableIdAndIsActiveTrue(tableId);
-    }
+
 
     private List<OrderTableResponseDto> parse(List<OrderTableEntity> aTrue){
         List<OrderTableResponseDto> list = new ArrayList<>();
