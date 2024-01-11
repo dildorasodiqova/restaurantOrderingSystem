@@ -52,7 +52,7 @@ public class FoodController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/update/{foodId}")
-    public ResponseEntity<String> disActiveOrActive(@PathVariable UUID foodId, @RequestParam FoodCreateDto dto) {
+    public ResponseEntity<String> disActiveOrActive(@PathVariable UUID foodId, @RequestBody FoodCreateDto dto) {
         return ResponseEntity.ok(foodService.update(dto, foodId));
     }
 

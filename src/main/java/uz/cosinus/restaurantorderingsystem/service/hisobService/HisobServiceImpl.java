@@ -32,9 +32,13 @@ public class HisobServiceImpl implements HisobService {
             names.add(new FoodInfoForHisob(food.getName(), food.getPrice()));
 
             orderOfFoodService.remove(orderFood.getId());
-            hisobRepository.save(new HisobEntity(orderFood.getId(), food.getPrice()));
+            hisobRepository.save(new HisobEntity(orderFood.getId(), food.getPrice(), false));
         }
-        return new HisobResponseDto(names, totalAmount, orderFood.getTableNumber());
+        double amount = 0D;
+        if (totalAmount >= 100000) {
+            amount = totalAmount - totalAmount * 0.3; ///yani buyerda 100 000 dan kop  ovqatlanganlar uchun chegirmasi bor
+        }
+        return new HisobResponseDto(names, amount, orderFood.getTableNumber());
     }
 
     @Override

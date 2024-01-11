@@ -17,5 +17,5 @@ import java.util.UUID;
 public class HisobEntity extends BaseEntity {
     private UUID orderOfFoodId;
     private Double price;
-
+    private boolean paid = false;
 }

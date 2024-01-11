@@ -36,7 +36,7 @@ public class FloorController {
 
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/cancel/{orderTableId}")
+    @DeleteMapping("/disActiveOrActive")
     public ResponseEntity<String> disActiveOrActive(@RequestParam Integer floorNumber, @RequestParam boolean trueOrFalse ) {
         return ResponseEntity.ok(floorService.disActiveOrActive(floorNumber,trueOrFalse));
     }
