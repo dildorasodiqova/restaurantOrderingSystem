@@ -18,6 +18,11 @@ public interface FoodRepository extends JpaRepository<FoodEntity, UUID> {
     @Query("UPDATE foods f SET f.isActive = :trueOrFalse WHERE f.id = :foodId")
     int disActiveOrActive(UUID foodId, Boolean trueOrFalse);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE foods f SET f.discountPercentage = :percentage WHERE f.id = :foodId")
+    int updateDiscountPercentage(UUID foodId, Double percentage);
+
     List<FoodEntity> getAllByIsActiveTrue(PageRequest pageRequest);
 
     @Transactional

@@ -4,6 +4,7 @@ import uz.cosinus.restaurantorderingsystem.dto.createDto.TableCreateDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.TableResponseDto;
 import uz.cosinus.restaurantorderingsystem.entities.TableEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,5 @@ public interface TableService {
     TableResponseDto getById(UUID tableId);
     String disActive(UUID tableId);
     String active(UUID tableId);
-
-
+    List<TableResponseDto> getFreeTable(LocalDateTime startDate, LocalDateTime endDate, int page, int size, UUID floorId);
 }

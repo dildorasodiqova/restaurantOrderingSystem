@@ -1,5 +1,7 @@
 package uz.cosinus.restaurantorderingsystem.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +37,11 @@ public class FloorController {
     }
 
 
+    @Operation(
+            description = "This method dis active or active  a floor status",
+            method = "PUT method is supported",
+            security = @SecurityRequirement(name = "pre authorize", scopes = {"ADMIN"})
+    )
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/disActiveOrActive")
     public ResponseEntity<String> disActiveOrActive(@RequestParam Integer floorNumber, @RequestParam boolean trueOrFalse ) {

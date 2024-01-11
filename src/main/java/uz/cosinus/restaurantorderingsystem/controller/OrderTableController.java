@@ -1,5 +1,7 @@
 package uz.cosinus.restaurantorderingsystem.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +48,12 @@ public class OrderTableController {
     }
 
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @Operation(
+            description = "This method cancel the order table",
+            method = "DELETE method is supported",
+            security = @SecurityRequirement(name = "pre authorize", scopes = {"ADMIN", "USER"})
+    )
+    @PreAuthorize("hasAuthority('ADMIN' or hasAuthority('USER'))")
     @DeleteMapping("/cancel/{orderTableId}")
     public String disActive(@PathVariable UUID orderTableId) {
         return orderTableService.cancelOrderTable(orderTableId);

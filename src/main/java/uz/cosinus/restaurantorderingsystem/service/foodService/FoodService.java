@@ -16,4 +16,6 @@ public interface FoodService {
     List<FoodResponseDto> parse(List<FoodEntity> all);
 
     FoodResponseDto getById(UUID foodId);
+
+    String updateDiscountPercentage(UUID foodId, Double percentage);
 }

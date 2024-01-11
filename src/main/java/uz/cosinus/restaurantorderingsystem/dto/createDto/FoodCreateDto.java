@@ -14,4 +14,5 @@ public class FoodCreateDto {
     private Double price;
     private String description;
     private String timeToGetReady;
+    private Double discountPercentage = 0.0;
 }

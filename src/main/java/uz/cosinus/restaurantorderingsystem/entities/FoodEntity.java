@@ -17,4 +17,5 @@ public class FoodEntity extends BaseEntity{
     private Double price;
     private String description;
     private String timeToGetReady;
+    private Double discountPercentage = 0.0;
 }

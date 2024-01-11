@@ -39,6 +39,10 @@ public class  OrderTableServiceImpl implements OrderTableService{
         UserEntity user = userService.findById(UUID.fromString(name));
         TableEntity table = tableService.finById(tableId);
 
+        if (table.getCountOfChair() < createDto.getIntendedOfPerson()){
+            throw new BadRequestException("This table is intended for " + table.getCountOfChair() + " people. Please select another table");
+        }
+
         LocalDateTime timeBooked = createDto.getTimeBooked();
         LocalDateTime startDateTime = timeBooked.minusMinutes(30);  // Yarim soat avval
         LocalDateTime endDateTime = timeBooked.plusMinutes(30);  // Yarim soat keyin

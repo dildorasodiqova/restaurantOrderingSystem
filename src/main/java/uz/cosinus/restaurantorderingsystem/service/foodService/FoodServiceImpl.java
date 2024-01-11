@@ -88,6 +88,15 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public FoodResponseDto getById(UUID foodId) {
         FoodEntity food = foodRepository.findById(foodId).orElseThrow(() -> new DataNotFoundException("Food not found"));
-        return new FoodResponseDto(food.getId(), food.getName(), food.getPrice(), food.getDescription(), food.getTimeToGetReady(), food.getIsActive(), food.getCreatedDate());
+        return new FoodResponseDto(food.getId(), food.getName(), food.getPrice(), food.getDescription(), food.getTimeToGetReady(), food.getIsActive(), food.getCreatedDate(), food.getDiscountPercentage());
+    }
+
+    @Override
+    public String updateDiscountPercentage(UUID foodId, Double percentage) {
+        int i = foodRepository.updateDiscountPercentage(foodId, percentage);
+        if (i == 0){
+            throw new DataNotFoundException("food not found");
+        }
+        return "Update discount percentage .";
     }
 }

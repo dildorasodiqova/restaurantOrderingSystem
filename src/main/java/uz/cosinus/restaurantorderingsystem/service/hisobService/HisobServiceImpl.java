@@ -28,7 +28,7 @@ public class HisobServiceImpl implements HisobService {
         OrderFoodResponseDto orderFood = orderOfFoodService.getOrderByTable(tableNumber,floorNumber);
         List<FoodResponseDto> foods = orderFood.getFoods();
         for (FoodResponseDto food : foods) {
-            totalAmount += food.getPrice();
+            totalAmount += (food.getPrice() - food.getPrice()* food.getDiscountPercentage()); // buyerda chegirma foizi ayirib tashlanadi
             names.add(new FoodInfoForHisob(food.getName(), food.getPrice()));
 
             orderOfFoodService.remove(orderFood.getId());

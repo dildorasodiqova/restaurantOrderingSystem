@@ -1,5 +1,7 @@
 package uz.cosinus.restaurantorderingsystem.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,12 +19,23 @@ import java.util.UUID;
 @RequestMapping("/api/v1/hisob")
 public class HisobController {
     private final HisobService hisobService;
+
+    @Operation(
+            description = "This method get total amount of table.",
+            method = "GET method is supported",
+            security = @SecurityRequirement(name = "pre authorize", scopes = {"OFINSAND", "USER"})
+    )
     @PreAuthorize("hasAuthority('USER') or hasAuthority('OFINSAND')")
     @GetMapping("/getHisobOfTable")
     public ResponseEntity<HisobResponseDto> getHisobOfTable(@RequestParam Integer tableNumber, @RequestParam Integer floorNumber) {
         return ResponseEntity.ok(hisobService.getHisobOfTable(tableNumber, floorNumber));
     }
 
+    @Operation(
+            description = "It indicates the total amount of food consumed in 1 day. ",
+            method = "GET method is supported",
+            security = @SecurityRequirement(name = "pre authorize", scopes = {"ADMIN"})
+    )
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/dayTotalShot")
     public ResponseEntity<Double> dayTotalShot(@RequestParam LocalDateTime localDateTime) {

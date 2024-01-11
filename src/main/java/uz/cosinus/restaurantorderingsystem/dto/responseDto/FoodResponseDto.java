@@ -20,7 +20,7 @@ public class FoodResponseDto {
      private String timeToGetReady;
      private Boolean active;
      private LocalDateTime createdDate;
-
+     private Double discountPercentage = 0.0;
 
 
 }

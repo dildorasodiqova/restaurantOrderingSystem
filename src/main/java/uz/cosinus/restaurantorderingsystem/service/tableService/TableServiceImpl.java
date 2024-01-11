@@ -15,6 +15,7 @@ import uz.cosinus.restaurantorderingsystem.repository.TableRepository;
 import uz.cosinus.restaurantorderingsystem.service.floorService.FloorService;
 import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +30,9 @@ public class TableServiceImpl implements TableService{
         FloorEntity byId = floorService.findById(floorId);
         for (Integer i = 0; i < createDto.getCount(); i++) { //  shuyerda tekshirish kerakmasmi 0  ga teng emasmi deb
             int countOfTable = tableRepository.countAllBy();
+            if(createDto.getCountOfChair() <= 4) {
+                tableRepository.save(new TableEntity(byId, countOfTable + 1, 4)); // yani defoult 4 talik stole bo'ladi.
+            }
             tableRepository.save(new TableEntity(byId, countOfTable + 1, createDto.getCountOfChair()));
         }
         return "Successfully";
@@ -71,6 +75,14 @@ public class TableServiceImpl implements TableService{
          tableRepository.save(table);
          return "Active the table";
     }
+
+    @Override
+    public List<TableResponseDto> getFreeTable(LocalDateTime startDate, LocalDateTime endDate, int page, int size, UUID floorId) {
+        List<TableResponseDto> list = new ArrayList<>();
+        return null;
+ //// buyerini qanday qilish kerak masalan men 12 dan 8 gacha bo'lgan o'rindiqlarni ko'rmoqchiman. agar uni shuni yarmida bosh va yarmida band bo'ladigan bo'lsa osha stolni band deyishim kkmi bo'shmi
+    }
+
 
     private List<TableResponseDto> parse(List<TableEntity> tables){
         List<TableResponseDto> list = new ArrayList<>();
