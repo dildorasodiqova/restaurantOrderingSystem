@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.*;
 import uz.cosinus.restaurantorderingsystem.entities.HisobEntity;
+import uz.cosinus.restaurantorderingsystem.enums.FoodStatus;
 import uz.cosinus.restaurantorderingsystem.repository.HisobRepository;
 import uz.cosinus.restaurantorderingsystem.service.orderOfFoodService.OrderOfFoodService;
 import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
@@ -29,6 +30,8 @@ public class HisobServiceImpl implements HisobService {
         for (FoodResponseDto food : foods) {
             totalAmount += food.getPrice();
             names.add(new FoodInfoForHisob(food.getName(), food.getPrice()));
+
+            orderOfFoodService.remove(orderFood.getId());
             hisobRepository.save(new HisobEntity(orderFood.getId(), food.getPrice()));
         }
         return new HisobResponseDto(names, totalAmount, orderFood.getTableNumber());

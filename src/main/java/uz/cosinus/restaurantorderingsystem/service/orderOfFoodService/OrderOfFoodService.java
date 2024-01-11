@@ -16,4 +16,6 @@ public interface OrderOfFoodService {
     OrderFoodResponseDto getOrderByTable(Integer tableNumber , Integer floorNumber);
 
     String updateFoodStatus(UUID orderId, String statusType);
+
+    void remove(UUID id);
 }

@@ -97,6 +97,13 @@ public class OrderOfFoodServiceImpl implements OrderOfFoodService{
         return "SuccessFully";
     }
 
+    @Override
+    public void remove(UUID id) {
+        OrderOfFoodEntity order = orderFoodRepository.findById(id)
+                .orElseThrow(()-> new DataNotFoundException("Order not fount"));
+        orderFoodRepository.delete(order);
+    }
+
 
     private OrderOfFoodEntity parse(OrderFoodCreateDto dto){
         return modelMapper.map(dto, OrderOfFoodEntity.class);
