@@ -23,7 +23,7 @@ public class FloorServiceImpl implements FloorService{
         if (floorRepository.existsAllByNumber(dto.getNumber())){
             throw new DataAlreadyExistsException("This floor number already exists. Please choose another number");
         }
-        FloorEntity save = floorRepository.save(entity);
+         floorRepository.save(entity);
         return "Successfully";
     }
 
@@ -34,14 +34,24 @@ public class FloorServiceImpl implements FloorService{
     }
 
     @Override
-    public String disActive(Integer floorNumber) {
-        FloorEntity entity = floorRepository.findByNumber(floorNumber).orElseThrow(() -> new DataNotFoundException("Floor not found"));
-
+    public String disActiveOrActive(Integer floorNumber,boolean trueOrFalse ) {
+        int i = floorRepository.disActiveOrActive(floorNumber, trueOrFalse);
+        if (i == 0){
+            throw new DataNotFoundException("Floor not found");
+        }
+        return "Successfully";
     }
 
     @Override
     public FloorEntity findById(UUID floorId) {
         return floorRepository.findById(floorId).orElseThrow(() -> new DataNotFoundException("Floor not found"));
+    }
+
+    @Override
+    public FloorResponseDto getById(UUID floorId) {
+        FloorEntity entity = floorRepository.findById(floorId).orElseThrow(() -> new DataNotFoundException("Floor not found"));
+        return parse(entity);
+
     }
 
     private List<FloorResponseDto> parse(List<FloorEntity> all){
@@ -53,5 +63,8 @@ public class FloorServiceImpl implements FloorService{
     }
     private FloorEntity parse(FloorCreateDto dto){
         return new FloorEntity(dto.getNumber(), dto.getDescription());
+    }
+    private FloorResponseDto parse(FloorEntity entity){
+        return new FloorResponseDto(entity.getId(), entity.getNumber(), entity.getDescription(), entity.getCreatedDate());
     }
 }

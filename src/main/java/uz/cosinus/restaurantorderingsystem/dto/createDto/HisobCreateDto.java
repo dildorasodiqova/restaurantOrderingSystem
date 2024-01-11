@@ -1,21 +1,15 @@
-package uz.cosinus.restaurantorderingsystem.entities;
+package uz.cosinus.restaurantorderingsystem.dto.createDto;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
-
-@Entity(name = "hisob")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class HisobEntity extends BaseEntity {
+public class HisobCreateDto {
     private UUID orderOfFoodId;
-    private Double price;
-
 }

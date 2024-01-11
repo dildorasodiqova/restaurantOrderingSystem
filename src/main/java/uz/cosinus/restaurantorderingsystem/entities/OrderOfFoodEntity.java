@@ -1,12 +1,12 @@
 package uz.cosinus.restaurantorderingsystem.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.cosinus.restaurantorderingsystem.enums.FoodStatus;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,6 +15,10 @@ import java.util.List;
 @Setter
 @Entity(name = "orderOfFood")
 public class OrderOfFoodEntity extends BaseEntity {
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<FoodEntity> food;
+
+    private Integer floorNumber;
+    private Integer tableNumber;
+    private FoodStatus foodStatus = FoodStatus.IN_PREPARATION;
 }

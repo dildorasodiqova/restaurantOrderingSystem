@@ -5,7 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import uz.cosinus.restaurantorderingsystem.dto.createDto.MailDto;
+import uz.cosinus.restaurantorderingsystem.entities.OrderTableEntity;
+import uz.cosinus.restaurantorderingsystem.repository.OrderTableRepository;
 import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -13,19 +18,22 @@ import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableS
 public class ScheduledNotification {
     private final OrderTableService orderTableService;
     private final MailService mailService;
+    private final OrderTableRepository orderTableRepository;
 
     /**
-     * bu method ogohlantiradi kitobini olib ketishi un
+     * bu method agar user tabel zkas qilib kelishilgan vaqtda kelamasa . bu zakas otkaz qilinadi. va emailiga habar jo'natiladi.
      */
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void checkSubmissionDate(String email) {
-        MailDto mailDto = new MailDto("Today is the last day you can pick up your reserved book. Otherwise it will not be booked for you.", booking.getUser().getEmail());
-        mailService.sendMail(mailDto);
-    }
+    @Scheduled(cron = "0 0 */2 * * *") // Har 2 soatda bir
+    public void cleanupOldOrders() {
+        LocalDateTime twoHoursAgo = LocalDateTime.now().minusHours(2);
+        List<OrderTableEntity> oldOrders = orderTableService.findByOrderTimeBeforeAndFoodIsNull(twoHoursAgo);
 
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void removeBooking(){
-        bookingService.delete();
+        for (OrderTableEntity order : oldOrders) {
+            MailDto mailDto = new MailDto("Your reservation for this table has been canceled because you did not arrive at the agreed time.", order.getUser().getEmail());
+            mailService.sendMail(mailDto);
+
+            orderTableRepository.delete(order);
+        }
     }
 
 

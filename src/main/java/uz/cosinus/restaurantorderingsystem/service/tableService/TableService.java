@@ -12,7 +12,8 @@ public interface TableService {
     List<TableResponseDto> getAll(int page, int size, UUID floorId);
     TableEntity finById(UUID tableId);
     TableResponseDto getById(UUID tableId);
+    String disActive(UUID tableId);
+    String active(UUID tableId);
 
 
-    /// shuyerda stoleni disactiva qiladigani bolish kerak. qachonki orderi yuq bo'lsa.
 }

@@ -10,7 +10,8 @@ import java.util.UUID;
 public interface FloorService {
     String create(FloorCreateDto dto);
     List<FloorResponseDto> getAll();
-    String disActive(Integer floorNumber);
+    String disActiveOrActive(Integer floorNumber,boolean trueOrFalse );
 
     FloorEntity findById(UUID floorId);
+    FloorResponseDto getById(UUID floorId);
 }

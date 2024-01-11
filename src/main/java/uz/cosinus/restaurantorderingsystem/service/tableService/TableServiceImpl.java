@@ -8,9 +8,11 @@ import uz.cosinus.restaurantorderingsystem.dto.createDto.TableCreateDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.TableResponseDto;
 import uz.cosinus.restaurantorderingsystem.entities.FloorEntity;
 import uz.cosinus.restaurantorderingsystem.entities.TableEntity;
+import uz.cosinus.restaurantorderingsystem.exception.BadRequestException;
 import uz.cosinus.restaurantorderingsystem.exception.DataNotFoundException;
 import uz.cosinus.restaurantorderingsystem.repository.TableRepository;
 import uz.cosinus.restaurantorderingsystem.service.floorService.FloorService;
+import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class TableServiceImpl implements TableService{
     private final FloorService floorService;
     private final TableRepository tableRepository;
+    private final OrderTableService orderTableService;
     @Override
     public String create(UUID floorId, TableCreateDto createDto) {
         FloorEntity byId = floorService.findById(floorId);
@@ -46,6 +49,26 @@ public class TableServiceImpl implements TableService{
     public TableResponseDto getById(UUID tableId) {
         TableEntity table = tableRepository.findById(tableId).orElseThrow(() -> new DataNotFoundException("Table not found"));
         return parse(table);
+    }
+
+    @Override
+    public String disActive(UUID tableId) {
+        TableEntity table = tableRepository.findById(tableId).orElseThrow(() -> new DataNotFoundException("Table not found"));
+        boolean orderOfTable = orderTableService.findOrderOfTable(table.getId());
+        if (orderOfTable){
+            throw new BadRequestException("Zakas available for this table, please try again later.");
+        }
+        table.setIsActive(false);
+        tableRepository.save(table);
+        return "Deleted the table";
+    }
+
+    @Override
+    public String active(UUID tableId) {
+        TableEntity table = tableRepository.findById(tableId).orElseThrow(() -> new DataNotFoundException("Table not found"));
+         table.setIsActive(true);
+         tableRepository.save(table);
+         return "Active the table";
     }
 
     private List<TableResponseDto> parse(List<TableEntity> tables){

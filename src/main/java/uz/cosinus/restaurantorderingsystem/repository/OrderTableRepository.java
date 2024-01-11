@@ -1,9 +1,11 @@
 package uz.cosinus.restaurantorderingsystem.repository;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import uz.cosinus.restaurantorderingsystem.entities.OrderTableEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public interface OrderTableRepository extends JpaRepository<OrderTableEntity, UUID> {
@@ -11,5 +13,9 @@ public interface OrderTableRepository extends JpaRepository<OrderTableEntity, UU
     // bunday qilganimni sababi kimdur band qilmoqchi bo'lgan tablega kimdur yarim soat avval o'tirishga zakas qilgan bo'lsa
     // aniqki ular yarim soatda turib ketisha olmaydi. agar u aytagn vaqtdan yarim soat keyin order bor bo'lsa hozirgi user turib keta olmaydi. shuning uchin yarim soat avvalgi vaqtni va yarim soat kengi vaqtni tanladim.
     boolean existsAllByTimeBookedBetweenAndTableId(LocalDateTime timeBooked, LocalDateTime timeBooked2, UUID table_id);
+
+    List<OrderTableEntity> findAllByCreatedDate(LocalDateTime createdDate);
+    List<OrderTableEntity> findAllByIsActiveTrue(PageRequest pageRequest);
+    boolean existsAllByTableIdAndIsActiveTrue(UUID table_id);
 
 }
