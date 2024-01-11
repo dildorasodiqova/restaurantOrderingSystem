@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import uz.cosinus.restaurantorderingsystem.dto.createDto.OrderFoodCreateDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.FoodResponseDto;
 import uz.cosinus.restaurantorderingsystem.dto.responseDto.OrderFoodResponseDto;
-import uz.cosinus.restaurantorderingsystem.dto.responseDto.OrderTableResponseDto;
 import uz.cosinus.restaurantorderingsystem.entities.FoodEntity;
 import uz.cosinus.restaurantorderingsystem.entities.OrderOfFoodEntity;
 import uz.cosinus.restaurantorderingsystem.entities.OrderTableEntity;
@@ -15,7 +14,6 @@ import uz.cosinus.restaurantorderingsystem.exception.DataNotFoundException;
 import uz.cosinus.restaurantorderingsystem.repository.OrderFoodRepository;
 import uz.cosinus.restaurantorderingsystem.repository.OrderTableRepository;
 import uz.cosinus.restaurantorderingsystem.service.foodService.FoodService;
-import uz.cosinus.restaurantorderingsystem.service.orderTableService.OrderTableService;
 
 import java.util.List;
 import java.util.Optional;
