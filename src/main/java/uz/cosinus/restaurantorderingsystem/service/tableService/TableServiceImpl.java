@@ -84,6 +84,7 @@ public class TableServiceImpl implements TableService{
     }
 
 
+
     private List<TableResponseDto> parse(List<TableEntity> tables){
         List<TableResponseDto> list = new ArrayList<>();
         for (TableEntity table : tables) {

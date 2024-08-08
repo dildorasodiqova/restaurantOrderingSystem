@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.cosinus.restaurantorderingsystem.enums.FoodStatus;
 
 @Entity(name = "foods")
 @AllArgsConstructor

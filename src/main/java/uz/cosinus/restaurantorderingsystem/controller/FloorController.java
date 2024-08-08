@@ -24,7 +24,7 @@ public class FloorController {
     }
 
 
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') or hasAuthority('OFINSAND')")
+    @PreAuthorize("('ADMIN') or hasAuthority('USER') or hasAuthority('OFINSAND')")
     @GetMapping("/findById/{floorId}")
     public ResponseEntity<FloorResponseDto> findById(@PathVariable UUID floorId) {
         return ResponseEntity.ok(floorService.getById(floorId));

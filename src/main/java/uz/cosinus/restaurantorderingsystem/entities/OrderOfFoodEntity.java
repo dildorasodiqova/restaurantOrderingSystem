@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Entity(name = "orderOfFood")
 public class OrderOfFoodEntity extends BaseEntity {
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType., fetch = FetchType.EAGER)
     private List<FoodEntity> food;
 
     private Integer floorNumber;
